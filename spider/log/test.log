@@ -1,9 +1,0 @@
-2017-08-10 16:05:54,145 logger.py[line:47] DEBUG 调试信息
-2017-08-10 16:05:54,145 logger.py[line:41] INFO 提示信息
-2017-08-10 16:05:54,146 logger.py[line:44] WARNING 警告信息
-2017-08-10 16:05:54,147 logger.py[line:38] ERROR 错误信息
-2017-08-10 16:05:54,148 logger.py[line:50] ERROR 出了一些问题...
-Traceback (most recent call last):
-  File "logger.py", line 62, in <module>
-    None.do() # 异常代码
-AttributeError: 'NoneType' object has no attribute 'do'
