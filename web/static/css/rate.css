@@ -1,0 +1,83 @@
+#rate {
+    padding: 30px 50px;
+    text-align: center;
+}
+
+#rate #basic {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 300px;
+}
+
+#rate #dynamic {
+    padding: 20px;
+    text-align: center;
+}
+
+#rate #dynamic #control {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#rate #dynamic #plots {
+    width: 100%;
+}
+
+#rate #categories {
+    margin-bottom: 10px;
+}
+
+#rate #districts span,
+#rate #categories span {
+    display: inline-block;
+    font-size: 12px;
+    color: #fff;
+    background-color: #ccc;
+    padding: 3px 6px;
+    margin-bottom: 3px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: color .3s;
+    -o-transition: color .3s;
+    -ms-transition: color .3s;
+    -moz-transition: color .3s;
+    -webkit-transition: color .3s;
+    transition: background-color .3s;
+    -o-transition: background-color .3s;
+    -ms-transition: background-color .3s;
+    -moz-transition: background-color .3s;
+    -webkit-transition: background-color .3s;
+}
+
+#rate #districts span.active,
+#rate #categories span.active {
+    color: #fff;
+    background-color: #333;
+}
+
+#rate #showtime {
+    width: 44%;
+    height: 300px;
+    display: inline-block;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#rate #length {
+    width: 44%;
+    height: 300px;
+    display: inline-block;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#rate #average {
+    width: 94%;
+    margin-left: 3%;
+    margin-right: 3%;
+    height: 300px;
+}

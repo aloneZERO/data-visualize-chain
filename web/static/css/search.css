@@ -1,0 +1,93 @@
+#search {
+    padding: 50px 80px;
+}
+
+#search #searchForm {
+    position: relative;
+}
+
+#search #searchForm #message {
+    position: absolute;
+    top: 6px;
+    left: 270px;
+    color: #F95555;
+    display: none;
+}
+
+#search #searchForm .input-group {
+    width: 250px;
+}
+
+#search #searchForm #submit {
+    cursor: pointer;
+    transition: color .3s;
+    -o-transition: color .3s;
+    -ms-transition: color .3s;
+    -moz-transition: color .3s;
+    -webkit-transition: color .3s;
+    transition: background-color .3s;
+    -o-transition: background-color .3s;
+    -ms-transition: background-color .3s;
+    -moz-transition: background-color .3s;
+    -webkit-transition: background-color .3s;
+}
+
+#search #searchForm #submit:hover {
+    background-color: #bbb;
+    color: white;
+}
+
+#search #hot,
+#search #searchResult {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#search .movie {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+#search .movie .movie_cover {
+    width: 150px;
+    height: 200px;
+    border-radius: 5px;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: box-shadow .3s;
+    -o-transition: box-shadow .3s;
+    -ms-transition: box-shadow .3s;
+    -moz-transition: box-shadow .3s;
+    -webkit-transition: box-shadow .3s;
+}
+
+#search .movie .movie_cover:hover {
+    box-shadow: 5px 5px 10px rgba(20, 20, 20, 0.4);
+}
+
+#search .movie .movie_info {
+    margin-left: 170px;
+}
+
+#search .movie .movie_info a {
+    text-decoration: none;
+    color: #6FA4CA;
+    transition: color .3s;
+    -o-transition: color .3s;
+    -ms-transition: color .3s;
+    -moz-transition: color .3s;
+    -webkit-transition: color .3s;
+}
+
+#search .movie .movie_info a:hover {
+    color: #24597F;
+}
+
+#search .movie .movie_info p {
+    color: #555;
+    margin-bottom: 0;
+    font-size: 12px;
+}

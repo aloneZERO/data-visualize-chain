@@ -1,0 +1,47 @@
+#index {
+    padding: 30px 0px;
+}
+
+#index .line {
+    text-align: center;
+}
+
+#index #category {
+    display: inline-block;
+    height: 300px;
+    width: 44%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#index #language {
+    display: inline-block;
+    height: 300px;
+    width: 44%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#index #district {
+    display: inline-block;
+    height: 400px;
+    width: 80%;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+#index #year {
+    display: inline-block;
+    height: 300px;
+    width: 44%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#index #length {
+    display: inline-block;
+    height: 300px;
+    width: 44%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
