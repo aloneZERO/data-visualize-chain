@@ -63,63 +63,54 @@ $(document).ready(function() {
 
     // 电影评分统计
     var rateChart = echarts.init(document.getElementById('basic'));
-    var rateOption = {
-        title: {
-            text: '电影评分统计',
-            x: 'center',
-            padding: [15, 10, 10, 10]
-        },
-        tooltip: {
-            trigger: 'axis',
-            formatter: '{a} <br/> {c} 分,部'
-        },
-        xAxis: [{
-            type: 'value',
-            min: 2,
-            max: 10,
-            axisLabel: {
-                interval: 0 // x轴文字强制全部显示
-            }
-        }],
-        yAxis: [{
-            type: 'value',
-        }],
-        series: [{
-            name: '电影评分统计',
-            type: 'line',
-            showSymbol: false,
-            areaStyle: {normal: {}},
-            data: [
-                [2.5, 1], [3.6, 1], [3.8, 2], [3.9, 2], [4.0, 7],
-                [4.1, 8], [4.2, 8], [4.3, 7], [4.4, 11], [4.5, 11],
-                [4.6, 17], [4.7, 13], [4.8, 11], [4.9, 15], [5.0, 21],
-                [5.1, 32], [5.2, 38], [5.3, 29], [5.4, 47], [5.5, 55],
-                [5.6, 52], [5.7, 87], [5.8, 71], [5.9, 73], [6.0, 82],
-                [6.1, 81], [6.2, 91], [6.3, 97], [6.4, 131], [6.5, 119],
-                [6.6, 149], [6.7, 144], [6.8, 142], [6.9, 116], [7.0, 133],
-                [7.1, 147], [7.2, 160], [7.3, 151], [7.4, 163], [7.5, 156],
-                [7.6, 154], [7.7, 146], [7.8, 122], [7.9, 120], [8.0, 170],
-                [8.1, 183], [8.2, 177], [8.3, 155], [8.4, 140], [8.5, 131],
-                [8.6, 106], [8.7, 104], [8.8, 69], [8.9, 45], [9.0, 29],
-                [9.1, 31], [9.2, 12], [9.3, 4], [9.4, 5], [9.5, 2], [9.6, 1]
-            ],
-            markPoint: {
-                data: [
-                    {type: 'max', name: '最大值'},
-                    {type: 'min', name: '最小值'}
-                ]
+    rateChart.showLoading();
+    $.get('{{url_for("static", filename="data/rate.json")}}', function(data) {
+        data = eval('('+data+')');
+        var rate = [];
+        var rateData = [];
+        for (var i=2.0;i<=10.0;i+=0.1) {
+            var r = i.toFixed(1);
+            rate.push(r);
+            if (data[r]==undefined) rateData.push(0);
+            else rateData.push(data[r]);
+        }
+        rateChart.hideLoading();
+        rateChart.setOption({
+            title: {
+                text: '电影评分统计',
+                x: 'center',
+                padding: [15, 10, 10, 10]
             },
-            markLine: {
-                data: [
-                    {type: 'average', name: '平均值'}
-                ]
-            }
-        }]
-    };
-    rateChart.setOption(rateOption);
+            tooltip: {
+                trigger: 'axis',
+                formatter: '{a} <br/> {b}分：{c}部'
+            },
+            xAxis: [{
+                type: 'category',
+                data: rate
+            }],
+            yAxis: [{
+                type: 'value',
+            }],
+            series: [{
+                name: '电影评分统计',
+                type: 'line',
+                showSymbol: false,
+                areaStyle: {normal: {}},
+                data: rateData,
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                }
+            }]
+        });
+    });
 
     // 电影评分和上映年份的关系
-/*    var showtimeOption = {
+    var showtimeChart = echarts.init(document.getElementById('showtime'));
+    var showtimeOption = {
         title: {
             text: '上映时间－评分关系',
             x: "center"
@@ -127,9 +118,7 @@ $(document).ready(function() {
         tooltip: {
             trigger: 'axis',
             showDelay: 0,
-            formatter: function(params) {
-                return params.seriesName + '<br/>' + params.value[0] + '年 ' + params.value[1] + '分';
-            },
+            formatter: '{a} <br/> 年份-评分：{c}',
             axisPointer: {
                 show: true,
                 type: 'cross',
@@ -155,18 +144,10 @@ $(document).ready(function() {
             data: showtimeData,
         }]
     };
-    require(
-        [
-            'echarts',
-            'echarts/chart/scatter'
-        ],
-        function(ec) {
-            var showtime = ec.init(document.getElementById('showtime'));
-
-            showtime.setOption(showtimeOption);
-        });
+    showtimeChart.setOption(showtimeOption);
 
     // 电影评分和片长的关系
+    var lengthChart = echarts.init(document.getElementById('length'));
     var lengthOption = {
         title: {
             text: '片长－评分关系',
@@ -175,9 +156,7 @@ $(document).ready(function() {
         tooltip: {
             trigger: 'axis',
             showDelay: 0,
-            formatter: function(params) {
-                return params.seriesName + '<br/>' + params.value[0] + '分钟 ' + params.value[1] + '分';
-            },
+            formatter: '{a} <br/> 片长-评分：{c}',
             axisPointer: {
                 show: true,
                 type: 'cross',
@@ -203,15 +182,7 @@ $(document).ready(function() {
             data: lengthData,
         }]
     };
-    require(
-        [
-            'echarts',
-            'echarts/chart/scatter'
-        ],
-        function(ec) {
-            var length = ec.init(document.getElementById('length'));
-            length.setOption(lengthOption);
-        });
+    lengthChart.setOption(lengthOption);
 
     $('#rate #categories span').click(function() {
         $('#rate #categories span').removeClass('active');
@@ -223,24 +194,12 @@ $(document).ready(function() {
         if (category == '全部') {
             showtimeOption.series[0].data = showtimeData;
             lengthOption.series[0].data = lengthData;
-            require(
-                [
-                    'echarts',
-                    'echarts/chart/scatter'
-                ],
-                function(ec) {
-                    var showtime = ec.init(document.getElementById('showtime'));
-                    showtime.setOption(showtimeOption);
-                });
-            require(
-                [
-                    'echarts',
-                    'echarts/chart/scatter'
-                ],
-                function(ec) {
-                    var length = ec.init(document.getElementById('length'));
-                    length.setOption(lengthOption);
-                });
+
+            var showtime = echarts.init(document.getElementById('showtime'));
+            showtime.setOption(showtimeOption);
+           
+            var length = echarts.init(document.getElementById('length'));
+            length.setOption(lengthOption);
         } else {
             var temp1 = [];
             var temp2 = [];
@@ -252,24 +211,12 @@ $(document).ready(function() {
             }
             showtimeOption.series[0].data = temp1;
             lengthOption.series[0].data = temp2;
-            require(
-                [
-                    'echarts',
-                    'echarts/chart/scatter'
-                ],
-                function(ec) {
-                    var showtime = ec.init(document.getElementById('showtime'));
-                    showtime.setOption(showtimeOption);
-                });
-            require(
-                [
-                    'echarts',
-                    'echarts/chart/scatter'
-                ],
-                function(ec) {
-                    var length = ec.init(document.getElementById('length'));
-                    length.setOption(lengthOption);
-                });
+
+            var showtime = echarts.init(document.getElementById('showtime'));
+            showtime.setOption(showtimeOption);
+
+            var length = echarts.init(document.getElementById('length'));
+            length.setOption(lengthOption);
         }
     });
 
@@ -283,24 +230,12 @@ $(document).ready(function() {
         if (district == '全部') {
             showtimeOption.series[0].data = showtimeData;
             lengthOption.series[0].data = lengthData;
-            require(
-                [
-                    'echarts',
-                    'echarts/chart/scatter'
-                ],
-                function(ec) {
-                    var showtime = ec.init(document.getElementById('showtime'));
-                    showtime.setOption(showtimeOption);
-                });
-            require(
-                [
-                    'echarts',
-                    'echarts/chart/scatter'
-                ],
-                function(ec) {
-                    var length = ec.init(document.getElementById('length'));
-                    length.setOption(lengthOption);
-                });
+
+            var showtime = echarts.init(document.getElementById('showtime'));
+            showtime.setOption(showtimeOption);
+    
+            var length = echarts.init(document.getElementById('length'));
+            length.setOption(lengthOption);
         } else {
             var temp1 = [];
             var temp2 = [];
@@ -312,28 +247,17 @@ $(document).ready(function() {
             }
             showtimeOption.series[0].data = temp1;
             lengthOption.series[0].data = temp2;
-            require(
-                [
-                    'echarts',
-                    'echarts/chart/scatter'
-                ],
-                function(ec) {
-                    var showtime = ec.init(document.getElementById('showtime'));
-                    showtime.setOption(showtimeOption);
-                });
-            require(
-                [
-                    'echarts',
-                    'echarts/chart/scatter'
-                ],
-                function(ec) {
-                    var length = ec.init(document.getElementById('length'));
-                    length.setOption(lengthOption);
-                });
+            
+            var showtime = echarts.init(document.getElementById('showtime'));
+            showtime.setOption(showtimeOption);
+    
+            var length = echarts.init(document.getElementById('length'));
+            length.setOption(lengthOption);
         }
     });
 
     // 各国家各类别平均评分
+    var averageChart = echarts.init(document.getElementById('average'));
     var averageOption = {
         title: {
             text: '各国家各类别平均评分',
@@ -346,7 +270,10 @@ $(document).ready(function() {
         calculable: true,
         xAxis: [{
             type: 'category',
-            data: rates['United States of America']['categories']
+            data: rates['United States of America']['categories'],
+            axisLabel: {
+                interval: 0 // x轴文字强制全部显示
+            }
         }],
         yAxis: [{
             type: 'value',
@@ -367,37 +294,22 @@ $(document).ready(function() {
                 }]
             },
             markLine: {
-                data: [{
-                    type: 'average',
-                    name: '平均值'
-                }]
+                data: [ 
+                    {type: 'average', name: '平均值'}
+                ]
             }
         }]
     };
-    require(
-        [
-            'echarts',
-            'echarts/chart/bar'
-        ],
-        function(ec) {
-            var average = ec.init(document.getElementById('average'));
-            average.setOption(averageOption);
-        });
+    averageChart.setOption(averageOption);
 
     $('#rate select').change(function() {
         var district = $(this).find('option:selected').text();
         averageOption.xAxis[0].data = rates[district]['categories'];
         averageOption.series[0].data = rates[district]['rates'];
-        require(
-            [
-                'echarts',
-                'echarts/chart/bar'
-            ],
-            function(ec) {
-                var average = ec.init(document.getElementById('average'));
-                average.setOption(averageOption);
-            });
-    });*/
+        
+        var average = echarts.init(document.getElementById('average'));
+        average.setOption(averageOption);
+    });
 });
 </script>
 {% endblock %}
