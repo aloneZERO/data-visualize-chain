@@ -27,10 +27,7 @@ def m_clean(movie):
 
     # 发行地区去重，通过统一的映射字典命名
     district = movie['district'].split('/')[0].strip()
-    try:
-        movie['district'] = NAME_MAP[district]
-    except Exception as e:
-        movie['district'] = '未知'
+    movie['district'] = NAME_MAP.get(district, '未知')
 
     # 上映时间只取年份
     movie['showtime'] = movie['showtime'][:4]
